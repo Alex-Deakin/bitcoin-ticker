@@ -1,0 +1,29 @@
+/* Global styling */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 100%; /* We want the body to take up the whole screen */
+  height: 100vh;
+  display: flex; /* We want contents to be centred */
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif; /* Default font stack covering most devices */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #333; /* Off-black text colour, looks nicer than pure black */
+}
+
+input[type=checkbox] {
+  transform: translateY(2px);
+  cursor: pointer;
+}
+
+label {
+  user-select: none; /* Why can you even highlight these */
+  cursor: pointer;
+}
