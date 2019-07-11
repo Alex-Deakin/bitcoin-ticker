@@ -1,7 +1,7 @@
 ## Features
 
-* Live bitcoin price that updates once per minute (this is the update frequency of the data source)
-* Chart that displays the bitcoin price per day over the last 30 days
+* A live bitcoin price that updates once per minute (this is the update frequency of the data source)
+* A chart that displays the bitcoin price per day over the last 30 days
 * Toggles for chart labels, legend, and line smoothing / beziers
 * A dark mode!
 
