@@ -29,8 +29,8 @@ You can see a live demo of this code [here](https://alexdeakin.dev/bitcoin-widge
 
 The following packages were used in this project:
 
-[create-react-app](https://github.com/facebook/create-react-app) - for the skeleton
-[react-chartjs-2](https://github.com/jerairrest/react-chartjs-2) - a react wrapper for Chart.js; the library used for the bitcoin chart
-[react-spring](https://github.com/react-spring/react-spring) - for animations and easing
+* [create-react-app](https://github.com/facebook/create-react-app) - for the skeleton
+*  [react-chartjs-2](https://github.com/jerairrest/react-chartjs-2) - a react wrapper for Chart.js; the library used for the bitcoin chart
+* [react-spring](https://github.com/react-spring/react-spring) - for animations and easing
 
 The API data source I used in this project is kindly hosted free of charge by [https://www.blockchain.com](https://www.blockchain.com).
