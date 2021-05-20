@@ -6,8 +6,6 @@ import { initializeIcons } from "@uifabric/icons";
 import { getIconClassName } from '@uifabric/styling';
 initializeIcons(); // Initialise fabric UI icons
 
-// As this is a small project, all components are kept in this single file for convenience
-
 // Main widget component
 function BitcoinWidget() {
   const [dark, setDark] = useState(false);
@@ -15,45 +13,54 @@ function BitcoinWidget() {
   const [showLabels, setShowLabels] = useState(false);
   const [showLegend, setShowLegend] = useState(false);
   return (
-    <div className={(dark ? "dark " : "") + "btc-widget"}>
-      <div className="btc-widget-header">
-        Bitcoin Widget
-        <i className={"dark-toggle " + getIconClassName(dark ? "Sunny" : "ClearNight")} onClick={() => setDark(!dark)} title={"Turn the lights " + (dark ? "on" : "off")} />
-      </div>
-      <div className="btc-widget-content">
-        <BitcoinCounter currency="USD" />
-        <BitcoinChart dark={dark} smoothing={smoothing} showLabels={showLabels} showLegend={showLegend} />
-      </div>
-      <div className="btc-widget-footer">
-        <label htmlFor="showLabel">Show Labels: </label><input id="showLabel" type="checkbox" onChange={(e) => setShowLabels(e.target.checked)} />
-        <label htmlFor="showLegend">Show Legend: </label><input id="showLegend" type="checkbox" onChange={(e) => setShowLegend(e.target.checked)} />
-        <label htmlFor="smooth">Smoothing: </label><input id="smooth" type="checkbox" onChange={(e) => setSmoothing(e.target.checked)} />
+    <div className={(dark ? "dark " : "") + "btc-wrapper"}>
+      <div className="btc-widget">
+        <div className="btc-widget-header">
+          Bitcoin Ticker
+          <i className={"dark-toggle " + getIconClassName(dark ? "Sunny" : "ClearNight")} onClick={() => setDark(!dark)} title={"Turn the lights " + (dark ? "on" : "off")} />
+        </div>
+        <div className="btc-widget-content">
+          <BitcoinPrice currency="USD" />
+          <BitcoinChart dark={dark} smoothing={smoothing} showLabels={showLabels} showLegend={showLegend} />
+        </div>
+        <div className="btc-widget-footer">
+          <div>
+            <label htmlFor="showLabel">Show Labels: </label><input id="showLabel" type="checkbox" onChange={(e) => setShowLabels(e.target.checked)} />
+          </div>
+          <div>
+            <label htmlFor="showLegend">Show Legend: </label><input id="showLegend" type="checkbox" onChange={(e) => setShowLegend(e.target.checked)} />
+          </div>
+          <div>
+            <label htmlFor="smooth">Smoothing: </label><input id="smooth" type="checkbox" onChange={(e) => setSmoothing(e.target.checked)} />
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-// Counter widget that displays the current bitcoin price
-function BitcoinCounter(props) {
-  const [spring, setSpring] = useSpring(() => ({number: 0})); // We use a spring for the number so it has a nice transition
+// Displays the current bitcoin price as a header
+function BitcoinPrice(props) {
+  const [spring, setSpring] = useSpring(() => ({number: 0})); // We use a react spring for the number so it has a smooth transition
   updateCounter(() => {
     fetchData(); // Initialise data from source
     setInterval(() => { 
       fetchData();
-    }, 60 * 1000); // Update once every 60 seconds
-  }, []); // We need this empty dependency array to ensure that the effect only runs once. ESlint complains about this. Oh well :(
+    }, 10 * 1000); // Poll once every 10 seconds thereafter
+  }, []); // We need this empty dependency array to ensure that the effect only runs once. ESlint complains about this. Oh well :-)
   async function fetchData() {
     const response = await fetch("https://blockchain.info/ticker");
     const body = await response.json();
     if (response.status !== 200) { // Error
       throw Error(body.message);
-    } else { // Success    
+    } else { // Success
       setSpring({number: body[props.currency].last});
     }
   };
   return (
     <h2>
-      Current Bitcoin Price: $<animated.span>{spring.number.interpolate((number) => number.toFixed(2))}</animated.span>
+      {/* Using Intl.NumberFormat over toLocateString because it's much quicker and can be configured to always round to 2 decimal places */}
+      Current Bitcoin Price: <animated.span>{spring.number.interpolate((number) => new Intl.NumberFormat('en-GB', { style: 'currency', currency: props.currency, currencyDisplay: 'narrowSymbol' }).format(number))}</animated.span> 
     </h2>
   );
 }
@@ -117,7 +124,7 @@ function BitcoinChart(props) {
                 fontColor: props.dark ? "#ccc" : "#666"
               },
               ticks: {
-                fontColor: "#888" //These DON'T change once the chart has been initialised, so I have gone for a colour that is legible in both lighting modes
+                fontColor: "#888" // These CAN'T change once the chart has been initialised, so I have gone for a colour that is legible in both lighting modes
               },
               type: 'time', // Specify X axis as using date/time units
               gridLines: {

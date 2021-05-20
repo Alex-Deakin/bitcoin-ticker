@@ -1,5 +1,19 @@
 /* Bitcoin widget styling */
 
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.btc-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  transition: background-color 0.2s;
+}
+
 .btc-widget {
   display: flex;
   flex-flow: column nowrap;
@@ -43,27 +57,90 @@
 }
 
 .btc-widget-footer {
+  display: flex;
+  justify-content: center;
   border: none;
 }
 
-.btc-widget-footer input {
-  margin-right: 8px;
+.btc-widget-footer label {
+  display: inline-block;
+  padding: 0 4px 0 16px;
+}
+
+@media screen and (max-width: 720px) {
+  .btc-wrapper {
+    height: 100%;
+  }
+
+  .btc-widget {
+    width: 100%;
+    min-height: 100%;
+  }
+
+  .btc-widget-header {
+    padding: 10px;
+    font-size: 18px;
+  }
+
+  .btc-widget-header .dark-toggle {
+    font-size: 22px;
+  }
+
+  .btc-widget-content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+  }
+
+  .btc-widget-content h2 {
+    font-size: 28px;
+    margin: 16px 4px;
+  }
+
+  .btc-widget-footer {
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 0;
+  }
+
+  .btc-widget-footer div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #ccc;
+    transition: border-color 0.15s;
+  }
+
+  .btc-widget-footer label {
+    padding: 16px 0;
+  }
+
+  .btc-widget-footer input {
+    margin: 20px 16px 0 8px;
+  }
 }
 
 /* Dark mode */
-.btc-widget.dark {
+.dark {
+  background-color: #111;
+}
+.dark .btc-widget {
   color: #eee;
   border-color: #000;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
 }
 
-.btc-widget.dark .btc-widget-header,
-.btc-widget.dark .btc-widget-footer {
+.dark .btc-widget .btc-widget-header,
+.dark .btc-widget .btc-widget-footer {
   background: #252525;
   border-color: #111;
 }
 
-.btc-widget.dark .btc-widget-content {
+.dark .btc-widget .btc-widget-content {
   background: #333;
+  border-color: #111;
+}
+
+.dark .btc-widget-footer div {
   border-color: #111;
 }
